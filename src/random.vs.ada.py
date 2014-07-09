@@ -12,6 +12,7 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--max_depth', type=int, default=1, help='max depth for decision trees')
     parser.add_argument('-a', '--ada_boost_alg', type=str, 
                 default='SAMME', choices=['SAMME', 'SAMME.R'], help='use SAMME.R instead od SAMME for AdaBoost')    
+    parser.add_argument('-q', '--quiet', action='store_true', help='do not show graph at the end')    
     args = parser.parse_args()
     print 'jobs = %d' % args.jobs
     print 'output = %s' % args.output_dir
@@ -98,4 +99,5 @@ if __name__ == '__main__':
         args.ada_boost_alg,
         args.learning_rate
     ))
-    pl.show()
+    if not args.quiet :
+        pl.show()
