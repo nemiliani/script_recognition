@@ -1,0 +1,4 @@
+python train.py -j 4 -o . -r data/target.pickle -d data/data.pickle -s classifiers -t 0.75 -e 600 -l 0.7 -m 6
+python train.py -j 4 -o . -r data/target.pickle -d data/data.pickle -s classifiers -t 0.75 -e 600 -l 0.7 -m 9
+python train.py -j 4 -o . -r data/target.pickle -d data/data.pickle -s classifiers -t 0.75 -e 500 -l 0.7 -m 6 *
+
