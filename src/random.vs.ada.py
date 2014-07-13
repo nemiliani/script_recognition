@@ -19,13 +19,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--coef', type=float, default=1.0, help='c coeficient for SVC')
     parser.add_argument('-q', '--quiet', action='store_true', help='do not show graph at the end')    
     args = parser.parse_args()
-    print 'jobs = %d' % args.jobs
-    print 'output = %s' % args.output_dir
-    print 'estimators = %d' % args.estimators
-    print 'learning rate = %.1f' % args.learning_rate
-    print 'max depth = %d' % args.max_depth
-    print 'ada boost algorithm = %s' % args.ada_boost_alg
-
+    
     # Standard scientific Python imports
     import pylab as pl
 
