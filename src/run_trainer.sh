@@ -4,6 +4,7 @@ mkdir classifiers
 mkdir graphs
 cd data
 echo 'unzip data'
+rm -rf __MACOSX
 rm -rf train-tuples
 unzip TP2-train-tuples.zip
 rm -f train-tuples/*.pgm
@@ -17,6 +18,6 @@ echo 'center all images ...'
 cd ../../
 echo 'create tuples form centered images'
 python pgm_to_tuple.py -d data/train-tuples/ -o data/train-tuples
-python load.py -d data/train-tuples/ -o data/
+python load.py -d data/train-tuples/ -o data/ --no_names
 echo 'Training ... this might take a while'
 python train.py -o graphs/ -s classifiers/ -r data/target_center.pickle -d data/data_center.pickle -t 0.7 -e 500 -l 0.7 -m 6
