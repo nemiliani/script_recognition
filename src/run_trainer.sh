@@ -4,9 +4,10 @@ mkdir classifiers
 mkdir graphs
 cd data
 echo 'unzip data'
+rm -rf train-tuples
 unzip TP2-train-tuples.zip
-rm train-tuples/*.pgm
-rm train-tuples/*.tuple
+rm -f train-tuples/*.pgm
+rm -f train-tuples/*.tuple
 cd ..
 python transform.py -d data/train-tuples/ > data/train-tuples/center.sh
 chmod a+x data/train-tuples/center.sh
