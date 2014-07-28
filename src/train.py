@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     # Import datasets, classifiers and performance metrics
     from sklearn import datasets, metrics
-    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.ensemble import AdaBoostClassifier
     from sklearn.metrics import accuracy_score
@@ -40,7 +40,12 @@ if __name__ == '__main__':
     n_samples = len(data)
 
     if args.boost == 'Trees':
-        clf = DecisionTreeClassifier(max_depth=args.max_depth)
+        clf = DecisionTreeClassifier(
+                    criterion='gini',
+                    splitter='best',
+                    max_features='sqrt',
+                    min_samples_split=2,
+                    max_depth=args.max_depth)
     else:
         clf = SVC(gamma=args.gamma, C=args.coef)
     classifier = AdaBoostClassifier(
