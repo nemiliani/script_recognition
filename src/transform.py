@@ -14,4 +14,6 @@ if __name__ == '__main__':
     for fn in files:
         print 'convert %s -trim trim_%s' % (fn, fn)
         print 'convert trim_%s -resize 64x16 -background white -gravity center -extent 64x16 center_%s' % (fn, fn)
+#        print 'convert center_%s -crop 1x1-0-0@ +repage crop_%%d_%s' % (fn, fn)
+#        print 'convert crop_0_%s -sharpen 0x3 sharp_%s' % (fn, fn)
         print 'convert center_%s -compress none %s.pgm' % (fn, fn.split('.')[0])
