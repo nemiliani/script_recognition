@@ -54,6 +54,14 @@ if __name__ == '__main__':
         learning_rate=args.learning_rate,
         algorithm=args.ada_boost_alg)
 
+#    r_classifier = RandomForestClassifier(
+#                    n_estimators=args.estimators, 
+#                    max_depth=args.max_depth, 
+#                    n_jobs=4,
+#                    criterion='gini',
+#                    max_features='sqrt',
+#                    min_samples_split=2)
+
     # We learn the digits on the first half of the digits
     X_train = data[:int(n_samples * args.train_ratio)]
     y_train = target[:int(n_samples * args.train_ratio)]
@@ -62,13 +70,19 @@ if __name__ == '__main__':
     y_test = target[int(n_samples * args.train_ratio):]
 
     classifier.fit(X_train, y_train)
+#    r_classifier.fit(X_train, y_train)
 
     # Now predict the value of the digit on the second half:
     predicted = classifier.predict(X_test)
+#    r_predicted = r_classifier.predict(X_test)
 
     print("Classification report for classifier %s:\n%s\n"
           % (classifier, metrics.classification_report(y_test, predicted)))
     print("Confusion matrix:\n%s" % metrics.confusion_matrix(y_test, predicted))
+
+#    print("Classification report for classifier %s:\n%s\n"
+#          % (r_classifier, metrics.classification_report(y_test, r_predicted)))
+#    print("Confusion matrix:\n%s" % metrics.confusion_matrix(y_test, r_predicted))
 
     classifier_fn = '%s/ada.tr_%.2f.md_%d.e_%d.lr_%.2f.pickle' % (       
             args.classifier_dir,
@@ -89,18 +103,28 @@ if __name__ == '__main__':
     for p in classifier.staged_predict(X_train):
         train_errors.append(1. - accuracy_score(p, y_train))
 
+#    test_errors_rand = []
+#    for i in xrange(1, args.estimators + 1):
+#        print '.',
+#        r_classifier = RandomForestClassifier(n_estimators=i, n_jobs=4, max_depth=args.max_depth)
+#        r_classifier.fit(X_train, y_train)
+#        r_predicted = r_classifier.predict(X_test)
+#        test_errors_rand.append(1. - accuracy_score(r_predicted, y_test))
+#    print '.'
+
     pl.subplot(1,1,1)
-    pl.plot(n_trees, test_errors, c='red', label='AdaBoost.%s' % args.boost)
+    pl.plot(n_trees, test_errors, c='red', label='AdaBoost.%s - Test set' % args.boost)
+#    pl.plot(n_trees, test_errors_rand, c='blue', label='R.forests')
     pl.legend()
+    pl.ylim([0,0.6])
     pl.ylabel('Test Error')
     pl.xlabel('Number of Trees')
     if args.boost == 'Trees':
-        pl.savefig('%s/random.tr.%.2f.md.%d.est.%d_ada.rf.alg.%s.lr.%.1f.png' % (
+        pl.savefig('%s/adaboost.tr.%.2f.md.%d.est.%d.lr.%.1f.png' % (
             args.output_dir,
-            args.train_ratio,            
+            args.train_ratio,
             args.max_depth,
             args.estimators,
-            args.ada_boost_alg,
             args.learning_rate
         ))
     else:
